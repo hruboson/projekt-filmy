@@ -1,5 +1,7 @@
 <?php
 
+use Cake\Core\Plugin;
+use Cake\Routing\Router;
 use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder; // needed for scopes
 
@@ -18,6 +20,15 @@ $routes->scope('/promitani', function (RouteBuilder $routes){
 
    $routes->connect('/', ['controller' => 'Promitani', 'action' => 'index']);
    $routes->connect('/{id}', ['controller' => 'Promitani', 'action' => 'promitani'], ['pass' => ['id']]);
+
+});
+
+$routes->scope('/users', function (RouteBuilder $routes){
+
+   $routes->connect('/', ['controller' => 'Users', 'action' => 'index']);
+   $routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
+   $routes->connect('/add', ['controller' => 'Users', 'action' => 'add']);
+   $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
 
 });
 

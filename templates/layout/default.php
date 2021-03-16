@@ -15,6 +15,8 @@
  * @var \App\View\AppView $this
  */
 
+use function PHPUnit\Framework\equalTo;
+
 $title = 'Filmy'
 ?>
 <!DOCTYPE html>
@@ -44,6 +46,16 @@ $title = 'Filmy'
         <?= $this->Html->link('Domů', ['controller' => 'Main', 'action' => 'index', '_full' => true]) ?>
         <?= $this->Html->link('Filmy', ['controller' => 'Filmy', 'action' => 'index', '_full' => true]) ?>
         <?= $this->Html->link('Promítání', ['controller' => 'Promitani', 'action' => 'index', '_full' => true]) ?>
+        <?= $this->Html->link('Přihlásit se', ['controller' => 'Users', 'action' => 'login'], ['class' => 'font-weight-light']) ?>
+        <?= $this->Html->link('Registrace', ['controller' => 'Users', 'action' => 'add'], ['class' => 'font-weight-light']) ?>
+        <?php 
+        if($logged){
+            echo $this->Html->link('Odhlásit se', ['controller' => 'Users', 'action' => 'logout'], ['class' => 'font-weight-light']);
+            echo $username. " ".$email;
+            if($role == "admin"){
+                echo $this->Html->link('Uživatelé', ['controller' => 'Users', 'action' => 'index'], ['class' => 'font-weight-light']);
+            }
+        } ?>
     </div>
 
     <button class="btn btn-primary mt-1 ml-1" onclick="openNav()"><i class="fa fa-bars" aria-hidden="true"></i></button>
