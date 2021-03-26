@@ -40,12 +40,12 @@ class AppController extends Controller
             $this->set('username', $this->Authentication->getResult()->getData()['username']);
             $this->set('email', $this->Authentication->getResult()->getData()['email']);
             $this->set('role', $this->Authentication->getResult()->getData()['role']);
+            $this->set('user_id', $this->Authentication->getResult()->getData()['id']);
             $this->set('logged', true);
         }else{
             $this->set('logged', false);
         }
     }
-
     /**
      * Initialization hook method.
      *
