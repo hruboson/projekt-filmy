@@ -12,11 +12,13 @@ class FilmyNazvyTable extends Table
 
         $this->belongsTo('filmy')
         ->setBindingKey('id_film')
-        ->setForeignKey('id_film');
+        ->setForeignKey('id_film')
+        ->setJoinType(\Cake\Database\Query::JOIN_TYPE_INNER);
         
         $this->belongsTo('jazyky')
         ->setBindingKey('id_jazyk')
-        ->setForeignKey('jazyk');
+        ->setForeignKey('jazyk')
+        ->setJoinType(\Cake\Database\Query::JOIN_TYPE_INNER);
     }
 
 }

@@ -28,9 +28,9 @@ class FilmyController extends AppController
         $filmytable = $this->getTableLocator()->get('Filmy');
 
         $filmy =  $filmytable->find('all')
-            ->contain(['filmynazvy' => ['jazyky']])
             ->contain('filmytypy')
             ->contain('filmyzanry')
+            ->contain(['filmynazvy' => ['jazyky']])
             ->where(['jazyky.jazyk' => 'čeština']);
 
         $this->set('filmy', $filmy);
@@ -41,10 +41,10 @@ class FilmyController extends AppController
         $filmytable = $this->getTableLocator()->get('Filmy');
 
         $film = $filmytable->find()
-            ->contain(['filmynazvy' => ['filmy', 'jazyky']])
             ->contain('filmyzanry')
             ->contain('filmytypy')
-            ->contain(['filmyherci' => ['filmy', 'herci']])
+            ->contain(['filmynazvy' => ['jazyky']])
+            ->contain(['filmyherci' => ['herci']])
             ->where(['filmy.id_film' => $id])
             ->first();
 

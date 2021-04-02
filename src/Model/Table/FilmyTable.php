@@ -13,6 +13,7 @@ class FilmyTable extends Table
         $this
         ->belongsTo('filmynazvy')
         ->setForeignKey('id_film')
+        ->setBindingKey('id_film')
         ->setJoinType(\Cake\Database\Query::JOIN_TYPE_INNER);
 
         $this
