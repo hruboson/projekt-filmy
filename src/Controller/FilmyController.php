@@ -61,27 +61,31 @@ class FilmyController extends AppController
             $filmytable = $this->getTableLocator()->get('Filmy');
             $jazykytable = $this->getTableLocator()->get('Jazyky');
 
-            $film = $filmytable->find()
-                ->contain(['filmynazvy' => ['jazyky']])
-                ->contain('filmyzanry')
-                ->contain('filmytypy')
-                ->contain(['filmyherci' => ['filmy', 'herci']])
-                ->where(['filmy.id_film' => $id])
-                ->first();
-
+           
+            $film =  $filmytable->get($id, ['contain' => ['filmytypy', 'filmyzanry', 'filmynazvy.jazyky']]);
+            /*->contain('filmytypy')
+            ->contain('filmyzanry')
+            ->contain(['filmynazvy' => ['jazyky']])
+            ->where(['filmy.id_film' => $id]);*/
+            
+    
             $typyTable = $this->getTableLocator()->get('Typy');
             $zanryTable = $this->getTableLocator()->get('Zanry');
             $herciTable = $this->getTableLocator()->get('Herci');
+            $filmynazvyTable = $this->getTableLocator()->get('Filmynazvy');
 
             $typy = $typyTable->find()->select(['id_typ', 'nazev']);
             $zanry = $zanryTable->find()->select(['id_zanr', 'zanr_nazev']);
+            $filmynazvy = $filmynazvyTable->find()
+                        ->contain('jazyky')
+                        ->where(['id_film' => $id]);
             $jazyky = $jazykytable->find('all');
             $herci = $herciTable->find()
                 ->contain('filmyherci')
                 ->where(['filmyherci.film' => $id]);
 
             if ($this->request->is(['patch', 'post', 'put'])) {
-                $film = $this->Filmy->patchEntity($film, $this->request->getData());
+                //$film = $this->Filmy->patchEntity($film, $this->request->getData());
                 if ($this->Filmy->save($film)) {
                     $this->Flash->success(__('Změny byly uloženy'));
 
@@ -89,11 +93,13 @@ class FilmyController extends AppController
                 }
                 $this->Flash->error(__('Nepodařilo se uložit film. Prosím zkuste to znovu.'));
             }
+            
             $this->set(compact('film'));
             $this->set(compact('typy'));
             $this->set(compact('zanry'));
             $this->set(compact('herci'));
             $this->set(compact('jazyky'));
+            $this->set(compact('filmynazvy'));
         } else {
             return $this->redirect(['controller' => 'Filmy', 'action' => 'index']);
         }
@@ -105,22 +111,15 @@ class FilmyController extends AppController
 
             $this->loadModel('Filmynazvy');
 
-            $filmynazvytable = $this->getTableLocator()->get('Filmynazvy');
-            $nazvy = $filmynazvytable->find() // one init dataset
+            $filmynazvyTable = $this->getTableLocator()->get('Filmynazvy');
+            $nazvy = $filmynazvyTable->find() // one init dataset
                 ->contain('jazyky')
                 ->where(['id_film' => $id]);
 
             if ($this->request->is(['patch', 'post', 'put'])) {
-                foreach ($nazvy as $nazev) {
+                $nazev = $filmynazvyTable->newEntity($this->request->getData());
 
-                    $nazev->nazev = $this->request->getData($nazev->jazyky->jazyk);
-                    //$nazev->id_propojeni = $nazev->id_propojeni;
 
-                    if ($this->Filmynazvy->save($nazev)) {
-                    } else {
-                    }
-                    $this->Flash->error($nazvy);
-                }
                 $this->Flash->success(__('Názvy byly uloženy'));
                 return $this->redirect(['controller' => 'Filmy', 'action' => 'edit', $id]);
             }
