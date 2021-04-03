@@ -1,5 +1,4 @@
 <div class="h1 text-center mt-5">Seznam filmů</div>
-<?php debug($filmy)?>
 <div class="row">
     <div class="col-12">
         <table class="table table-striped">

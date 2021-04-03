@@ -4,7 +4,6 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
  */
-debug($filmynazvy);
 $typyOptions = array();
 foreach ($typy as $typ) {
     $typyOptions[(string)$typ['id_typ']] = $typ['nazev'];
@@ -13,11 +12,15 @@ $zanryOptions = array();
 foreach ($zanry as $zanr) {
     $zanryOptions[(string)$zanr['id_zanr']] = $zanr['zanr_nazev'];
 }
+$jazykyOption = array();
+foreach ($jazyky as $jazyk) {
+    $jazykyOptions[(string)$jazyk['id_jazyk']] = $jazyk['jazyk'];
+}
 
 ?>
 <div class="row">
     <div class="col-12 text-center h1">
-        <?php echo $film->filmynazvy->nazev; // 0 is value of cz 
+        <?php echo $film->filmynazvy->nazev;
         ?>
     </div>
 </div>
@@ -49,19 +52,34 @@ foreach ($zanry as $zanr) {
         </fieldset>
         <?= $this->Form->button('Uložit', ['type' => 'submit', 'class' => 'btn btn-primary mt-3 float-right']); ?>
         <?= $this->Form->end() ?>
-        <div class="h3 bg-success mt-3 text-center rounded"><?= $this->Flash->render() ?></div>
     </div>
 </div>
-<div class="row mt-5">
+<div class="row">
     <div class="col-12">
         <?= $this->Form->create($filmynazvy, ['url' => ['action' => 'updateJazyky', $film->id_film]]); ?>
-        
+
 
         <div class="h4 mt-3">Názvy</div>
         <?php foreach ($filmynazvy as $nazev) {
-            echo $this->Form->text((string)$nazev->jazyky->id_jazyk, ['default' => $nazev->nazev, 'class' => 'form form-control mb-1']);
+            echo $nazev->jazyky->jazyk;
+            echo "<div class='row'>";
+            
+            echo $this->Form->text((string)$nazev->jazyky->id_jazyk, ['default' => $nazev->nazev, 'class' => 'form form-control mb-1 col-11'])
+                .$this->Html->link('Odstranit', ['Controller' => 'Filmy', 'action' => 'removeJazyk', $nazev->id_propojeni], ['class' => 'btn btn-danger mb-1 col-1']);
+            echo "</div>";
         } ?>
         <?= $this->Form->button('Uložit', ['type' => 'submit', 'class' => 'btn btn-primary mt-3 float-right']); ?>
         <?= $this->Form->end() ?>
+    </div>
+    <div class="col-12 mt-3">
+        <?= $this->Form->create($jazyky, ['url' => ['action' => 'addJazyk', $film->id_film]]); ?>
+        <?= $this->Form->select('novy_jazyk', $jazykyOptions, ['class' => 'form form-control mb-1']); ?>
+        <?= $this->Form->button('Přidat jazyk', ['type' => 'submit', 'class' => 'btn btn-primary mt-3 float-right']); ?>
+        <?= $this->Form->end() ?>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-12">
+        <div class="h3 bg-success mt-3 text-center rounded"><?= $this->Flash->render() ?></div>
     </div>
 </div>

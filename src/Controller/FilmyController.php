@@ -28,6 +28,7 @@ class FilmyController extends AppController
         $filmytable = $this->getTableLocator()->get('Filmy');
 
         $filmy =  $filmytable->find('all')
+            ->distinct(['filmy.id_film']) // needed for multiple same language titles
             ->contain('filmytypy')
             ->contain('filmyzanry')
             ->contain(['filmynazvy' => ['jazyky']])
@@ -40,7 +41,7 @@ class FilmyController extends AppController
     {
         $filmytable = $this->getTableLocator()->get('Filmy');
 
-        $film = $filmytable->find()
+        $film = $filmytable->find() 
             ->contain('filmyzanry')
             ->contain('filmytypy')
             ->contain(['filmynazvy' => ['jazyky']])
@@ -61,14 +62,14 @@ class FilmyController extends AppController
             $filmytable = $this->getTableLocator()->get('Filmy');
             $jazykytable = $this->getTableLocator()->get('Jazyky');
 
-           
+
             $film =  $filmytable->get($id, ['contain' => ['filmytypy', 'filmyzanry', 'filmynazvy.jazyky']]);
             /*->contain('filmytypy')
             ->contain('filmyzanry')
             ->contain(['filmynazvy' => ['jazyky']])
             ->where(['filmy.id_film' => $id]);*/
-            
-    
+
+
             $typyTable = $this->getTableLocator()->get('Typy');
             $zanryTable = $this->getTableLocator()->get('Zanry');
             $herciTable = $this->getTableLocator()->get('Herci');
@@ -77,23 +78,23 @@ class FilmyController extends AppController
             $typy = $typyTable->find()->select(['id_typ', 'nazev']);
             $zanry = $zanryTable->find()->select(['id_zanr', 'zanr_nazev']);
             $filmynazvy = $filmynazvyTable->find()
-                        ->contain('jazyky')
-                        ->where(['id_film' => $id]);
+                ->contain('jazyky')
+                ->where(['id_film' => $id]);
             $jazyky = $jazykytable->find('all');
             $herci = $herciTable->find()
                 ->contain('filmyherci')
                 ->where(['filmyherci.film' => $id]);
 
             if ($this->request->is(['patch', 'post', 'put'])) {
-                //$film = $this->Filmy->patchEntity($film, $this->request->getData());
+                $film = $this->Filmy->patchEntity($film, $this->request->getData());
                 if ($this->Filmy->save($film)) {
-                    $this->Flash->success(__('Změny byly uloženy'));
+                    $this->Flash->success(__('Podrobnosti o filmu byly uloženy'));
 
                     return $this->redirect(['controller' => 'Filmy', 'action' => 'edit', $id]);
                 }
                 $this->Flash->error(__('Nepodařilo se uložit film. Prosím zkuste to znovu.'));
             }
-            
+
             $this->set(compact('film'));
             $this->set(compact('typy'));
             $this->set(compact('zanry'));
@@ -117,12 +118,55 @@ class FilmyController extends AppController
                 ->where(['id_film' => $id]);
 
             if ($this->request->is(['patch', 'post', 'put'])) {
-                $nazev = $filmynazvyTable->newEntity($this->request->getData());
+                foreach ($nazvy as $nazev) {
+                    $localNazev = $this->request->getData((string)$nazev->jazyk);
+                    $localNazvy = $filmynazvyTable->get($nazev->id_propojeni);
+                    $localNazvy->nazev = $localNazev;
+                    if($filmynazvyTable->save($localNazvy)){
+                        $this->Flash->success(__('Název byl uložen - '.$nazev->jazyky->jazyk));
+                    }else{
+                        $this->Flash->error('Název se neuložil -'.$nazev->jazyky->jazyk);
+                    }
+                }
 
-
-                $this->Flash->success(__('Názvy byly uloženy'));
                 return $this->redirect(['controller' => 'Filmy', 'action' => 'edit', $id]);
             }
+        }
+    }
+
+    public function addJazyk($id){
+        if ($this->Authentication->getResult()->getData()['role'] == "admin") { // Only authenticated user with admin role can access
+            $this->loadModel('Filmynazvy');
+
+            $filmynazvyTable = $this->getTableLocator()->get('Filmynazvy');
+
+            if ($this->request->is(['patch', 'post', 'put'])) {
+                $nazev = $filmynazvyTable->newEmptyEntity();
+                $nazev->jazyk = $this->request->getData('novy_jazyk');
+                $nazev->id_film = $id;
+                $nazev->nazev = 'Doplnit';
+                if($filmynazvyTable->save($nazev)){
+                    $this->Flash->success(__('Jazyk se přidal'));
+                }else{
+                    $this->Flash->error('Jazyk se nepřidal. Zkuste to prosím znovu.');
+                }
+            }
+            return $this->redirect(['controller' => 'Filmy', 'action' => 'edit', $id]);
+        }
+    }
+
+    public function removeJazyk($id){
+        if ($this->Authentication->getResult()->getData()['role'] == "admin") { // Only authenticated user with admin role can access
+            $this->loadModel('Filmynazvy');
+
+            $filmynazvyTable = $this->getTableLocator()->get('Filmynazvy');
+
+            $entity = $filmynazvyTable->get($id);
+            $id_film = $entity->id_film;
+            $filmynazvyTable->delete($entity);
+
+            return $this->redirect(['controller' => 'Filmy', 'action' => 'edit', $id_film]);
+
         }
     }
 

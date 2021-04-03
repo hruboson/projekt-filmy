@@ -14,7 +14,9 @@ $routes->scope('/filmy', function (RouteBuilder $routes){
    $routes->connect('/edit/{id}', ['controller' => 'Filmy', 'action' => 'edit'], ['pass' => ['id']]);
    $routes->connect('/delete/{id}', ['controller' => 'Filmy', 'action' => 'delete'], ['pass' => ['id']]);
    $routes->connect('/update_jazyky/{id}', ['controller' => 'Filmy', 'action' => 'updateJazyky'], ['pass' => ['id']]);
-
+   $routes->connect('/add_jazyky/{id}', ['controller' => 'Filmy', 'action' => 'addJazyk'], ['pass' => ['id']]);
+   $routes->connect('/remove_jazyk/{id}', ['controller' => 'Filmy', 'action' => 'removeJazyk'], ['pass' => ['id']]);
+   
 });
 
 $routes->scope('/promitani', function (RouteBuilder $routes){
