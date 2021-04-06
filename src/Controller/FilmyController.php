@@ -29,6 +29,7 @@ class FilmyController extends AppController
 
         $filmy =  $filmytable->find('all')
             ->distinct(['filmy.id_film']) // needed for multiple same language titles
+                                        // here should be min filmynazvy.id_propojeni
             ->contain('filmytypy')
             ->contain('filmyzanry')
             ->contain(['filmynazvy' => ['jazyky']])
@@ -69,10 +70,10 @@ class FilmyController extends AppController
             ->contain(['filmynazvy' => ['jazyky']])
             ->where(['filmy.id_film' => $id]);*/
 
-
+            $herciTable = $this->getTableLocator()->get('Herci');
             $typyTable = $this->getTableLocator()->get('Typy');
             $zanryTable = $this->getTableLocator()->get('Zanry');
-            $herciTable = $this->getTableLocator()->get('Herci');
+            $filmyherciTable = $this->getTableLocator()->get('Filmyherci');
             $filmynazvyTable = $this->getTableLocator()->get('Filmynazvy');
 
             $typy = $typyTable->find()->select(['id_typ', 'nazev']);
@@ -81,8 +82,9 @@ class FilmyController extends AppController
                 ->contain('jazyky')
                 ->where(['id_film' => $id]);
             $jazyky = $jazykytable->find('all');
-            $herci = $herciTable->find()
-                ->contain('filmyherci')
+            $herci = $herciTable->find('all');
+            $filmyherci = $filmyherciTable->find()
+                ->contain('herci')
                 ->where(['filmyherci.film' => $id]);
 
             if ($this->request->is(['patch', 'post', 'put'])) {
@@ -99,6 +101,7 @@ class FilmyController extends AppController
             $this->set(compact('typy'));
             $this->set(compact('zanry'));
             $this->set(compact('herci'));
+            $this->set(compact('filmyherci'));
             $this->set(compact('jazyky'));
             $this->set(compact('filmynazvy'));
         } else {
@@ -164,6 +167,41 @@ class FilmyController extends AppController
             $entity = $filmynazvyTable->get($id);
             $id_film = $entity->id_film;
             $filmynazvyTable->delete($entity);
+
+            return $this->redirect(['controller' => 'Filmy', 'action' => 'edit', $id_film]);
+
+        }
+    }
+
+    public function addHerec($id){
+        if ($this->Authentication->getResult()->getData()['role'] == "admin") { // Only authenticated user with admin role can access
+            $this->loadModel('Filmyherci');
+
+            $filmyherciTable = $this->getTableLocator()->get('Filmyherci');
+
+            if ($this->request->is(['patch', 'post', 'put'])) {
+                $herec = $filmyherciTable->newEmptyEntity();
+                $herec->herec = $this->request->getData('novy_herec');
+                $herec->film = $id;
+                if($filmyherciTable->save($herec)){
+                    $this->Flash->success(__('Herec byl přidán'));
+                }else{
+                    $this->Flash->error('Herec nebyl přidán. Zkuste to prosím znovu.');
+                }
+            }
+            return $this->redirect(['controller' => 'Filmy', 'action' => 'edit', $id]);
+        }
+    }
+
+    public function removeHerec($id){
+        if ($this->Authentication->getResult()->getData()['role'] == "admin") { // Only authenticated user with admin role can access
+            $this->loadModel('Filmyherci');
+
+            $filmyherciTable = $this->getTableLocator()->get('Filmyherci');
+
+            $entity = $filmyherciTable->get($id);
+            $id_film = $entity->film;
+            $filmyherciTable->delete($entity);
 
             return $this->redirect(['controller' => 'Filmy', 'action' => 'edit', $id_film]);
 

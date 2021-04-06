@@ -13,11 +13,11 @@ class FilmyHerciTable extends Table
 
         $this->belongsTo('filmy')
         ->setBindingKey('id_film')
-        ->setForeignKey('herec');
+        ->setForeignKey('film');
         
         $this->belongsTo('herci')
         ->setBindingKey('id_herec')
-        ->setForeignKey('film');
+        ->setForeignKey('herec');
 
         /*$this
         ->belongsToMany('filmy')

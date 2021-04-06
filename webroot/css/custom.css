@@ -60,3 +60,10 @@
 .small{
   font-size: 15px !important;
 }
+
+.bg-select{
+  background-color: #ECECE9;
+  border-radius: 20px;
+  padding: 30px;
+  border: 5px solid white;
+}

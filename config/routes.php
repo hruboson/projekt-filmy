@@ -13,9 +13,16 @@ $routes->scope('/filmy', function (RouteBuilder $routes){
    $routes->connect('/{id}', ['controller' => 'Filmy', 'action' => 'film'], ['pass' => ['id']]);
    $routes->connect('/edit/{id}', ['controller' => 'Filmy', 'action' => 'edit'], ['pass' => ['id']]);
    $routes->connect('/delete/{id}', ['controller' => 'Filmy', 'action' => 'delete'], ['pass' => ['id']]);
+
+   // jazyky
    $routes->connect('/update_jazyky/{id}', ['controller' => 'Filmy', 'action' => 'updateJazyky'], ['pass' => ['id']]);
    $routes->connect('/add_jazyky/{id}', ['controller' => 'Filmy', 'action' => 'addJazyk'], ['pass' => ['id']]);
    $routes->connect('/remove_jazyk/{id}', ['controller' => 'Filmy', 'action' => 'removeJazyk'], ['pass' => ['id']]);
+
+   // herci
+   $routes->connect('/update_herci/{id}', ['controller' => 'Filmy', 'action' => 'updateHerci'], ['pass' => ['id']]);
+   $routes->connect('/add_herec/{id}', ['controller' => 'Filmy', 'action' => 'addHerec'], ['pass' => ['id']]);
+   $routes->connect('/remove_herec/{id}', ['controller' => 'Filmy', 'action' => 'removeHerec'], ['pass' => ['id']]);
    
 });
 
