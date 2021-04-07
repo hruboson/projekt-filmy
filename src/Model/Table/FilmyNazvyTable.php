@@ -17,7 +17,7 @@ class FilmyNazvyTable extends Table
         
         $this->belongsTo('jazyky')
         ->setBindingKey('id_jazyk')
-        ->setForeignKey('jazyk')
+        ->setForeignKey('id_jazyk')
         ->setJoinType(\Cake\Database\Query::JOIN_TYPE_INNER);
     }
 

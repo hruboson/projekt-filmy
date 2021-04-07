@@ -8,10 +8,10 @@
 <div class="row">
     <div class="col-12">
         <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
+            <h4 class="heading"><?= __('Možnosti') ?></h4>
             <?= $this->Form->postLink(
                 __('Delete user'),
-                ['action' => 'delete', $user->id],
+            ['Controller' => 'Users','action' => 'delete', $user->id],
                 ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'class' => 'side-nav-item']
             ) ?><br>
             <?php //$this->Html->link(__('List Users'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>

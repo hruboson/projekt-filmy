@@ -3,25 +3,24 @@ namespace App\Model\Table;
 
 use Cake\ORM\Table;
 
-class HerciTable extends Table
+class ZemeTable extends Table
 {
     public function initialize(array $config): void
     {
         $this
-        ->setTable('herci');
+        ->setTable('zeme');
         
         $this
-        ->belongsTo('filmyherci')
-        ->setForeignKey('id_herec')
-        ->setBindingKey('id_herec')
+        ->belongsTo('filmyzeme')
+        ->setForeignKey('id_zeme')
+        ->setBindingKey('id_zeme')
         ->setJoinType(\Cake\Database\Query::JOIN_TYPE_INNER);
 
         $this
         ->belongsToMany('filmy', [
-        'through' => 'filmyherci',
-        'foreignKey' => 'id_herec',
+        'through' => 'filmyzeme',
+        'foreignKey' => 'id_zeme',
         'targetForeignKey' => 'id_film',
         ]);
     }
 }
-

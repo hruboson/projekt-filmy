@@ -12,16 +12,16 @@ class JazykyTable extends Table
         
         $this
         ->belongsTo('filmynazvy')
-        ->setForeignKey('jazyk')
+        ->setForeignKey('id_jazyk')
         ->setBindingKey('id_jazyk')
         ->setJoinType(\Cake\Database\Query::JOIN_TYPE_INNER);
 
         $this
         ->belongsToMany('filmy', [
-        'joinTable' => 'filmynazvy',
-        'foreignKey' => 'jazyk',
+        'through' => 'filmynazvy',
+        'foreignKey' => 'id_jazyk',
         'bindingKey' => 'id_jazyk',
-        'targetForeignKey' => 'id_film',
+        'targetForeignKey' => 'id_film'
         ]);
     }
 }

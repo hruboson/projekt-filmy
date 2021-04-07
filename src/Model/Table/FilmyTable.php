@@ -20,8 +20,34 @@ class FilmyTable extends Table
         ->belongsToMany('jazyky', [
         'through' => 'filmynazvy',
         'foreignKey' => 'id_film',
-        'bindingKey' => 'film',
-        'targetForeignKey' => 'id_jazyk',
+        'bindingKey' => 'id_film',
+        'targetForeignKey' => 'id_jazyk'
+        ]);
+
+        $this
+        ->hasMany('filmyherci')
+        ->setForeignKey('id_film')
+        ->setBindingKey('id_film')
+        ->setJoinType(\Cake\Database\Query::JOIN_TYPE_INNER);
+
+        $this
+        ->belongsToMany('herci', [
+        'through' => 'filmyherci',
+        'foreignKey' => 'id_film',
+        'targetForeignKey' => 'id_herec',
+        ]);
+
+        $this
+        ->hasMany('filmyzeme')
+        ->setForeignKey('id_film')
+        ->setBindingKey('id_film')
+        ->setJoinType(\Cake\Database\Query::JOIN_TYPE_INNER);
+
+        $this
+        ->belongsToMany('zeme', [
+        'through' => 'filmyzeme',
+        'foreignKey' => 'id_film',
+        'targetForeignKey' => 'id_zeme',
         ]);
 
         $this
@@ -36,18 +62,6 @@ class FilmyTable extends Table
         ->setBindingKey('typ')
         ->setJoinType(\Cake\Database\Query::JOIN_TYPE_INNER);
 
-        $this
-        ->hasMany('filmyherci')
-        ->setForeignKey('film')
-        ->setBindingKey('id_film')
-        ->setJoinType(\Cake\Database\Query::JOIN_TYPE_INNER);
-
-        $this
-        ->belongsToMany('herci', [
-        'through' => 'filmyherci',
-        'foreignKey' => 'id_film',
-        'targetForeignKey' => 'id_herec',
-        ]);
     }
 }
 

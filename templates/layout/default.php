@@ -45,6 +45,7 @@ $title = 'Filmy'
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <?= $this->Html->link('Domů', ['controller' => 'Main', 'action' => 'index', '_full' => true]) ?>
         <?= $this->Html->link('Filmy', ['controller' => 'Filmy', 'action' => 'index', '_full' => true]) ?>
+        <?= $this->Html->link('Herci', ['controller' => 'Herci', 'action' => 'index', '_full' => true]) ?>
         <?= $this->Html->link('Promítání', ['controller' => 'Promitani', 'action' => 'index', '_full' => true]) ?>
         <?php if (!$logged) { ?>
         <?= $this->Html->link('Přihlásit se', ['controller' => 'Users', 'action' => 'login'], ['class' => 'font-weight-light']) ?>

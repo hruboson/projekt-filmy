@@ -4,7 +4,6 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
  */
-debug($filmyherci);
 $typyOptions = array();
 foreach ($typy as $typ) {
     $typyOptions[(string)$typ['id_typ']] = $typ['nazev'];
@@ -21,11 +20,15 @@ $herciOptions = array();
 foreach ($herci as $herec) {
     $herciOptions[(string)$herec['id_herec']] = $herec['jmeno'] . " " . $herec['prijmeni'];
 }
+$zemeOptions = array();
+foreach ($zeme as $zemeLocal) {
+    $zemeOptions[(string)$zemeLocal['id_zeme']] = $zemeLocal['nazev'];
+}
 
 ?>
 <div class="row">
     <div class="col-12 text-center h1">
-        <?php echo $film->filmynazvy->nazev;
+        <?php echo $this->Html->link($film->filmynazvy->nazev, ['action' => 'film', $film->id_film]);
         ?>
     </div>
 </div>
@@ -42,6 +45,11 @@ foreach ($herci as $herec) {
         </div>
     </div>
 </div> 
+<div class="row mt-3">
+    <div class="col-12">
+        <div class="h3 bg-success mt-3 text-center rounded"><?= $this->Flash->render() ?></div>
+    </div>
+</div>
 <div class="row bg-select">
     <div class="col-12">
         <?= $this->Form->create($film) ?>
@@ -55,7 +63,7 @@ foreach ($herci as $herec) {
 
             ?>
         </fieldset>
-        <?= $this->Form->button('Uložit', ['type' => 'submit', 'class' => 'btn btn-primary mt-3 float-right']); ?>
+        <?= $this->Form->button('Uložit podrobnosti', ['type' => 'submit', 'class' => 'btn btn-primary mt-3 float-right']); ?>
         <?= $this->Form->end() ?>
     </div>
 </div>
@@ -73,7 +81,7 @@ foreach ($herci as $herec) {
                 . "<div class='col-1'>" . $this->Html->link('Odstranit', ['Controller' => 'Filmy', 'action' => 'removeJazyk', $nazev->id_propojeni], ['class' => 'btn btn-danger mb-1 font-weight-bold']) . "</div>";
             echo "</div>";
         } ?>
-        <?= $this->Form->button('Uložit', ['type' => 'submit', 'class' => 'btn btn-primary mt-3 float-right']); ?>
+        <?= $this->Form->button('Uložit názvy', ['type' => 'submit', 'class' => 'btn btn-primary mt-3 float-right']); ?>
         <?= $this->Form->end() ?>
     </div>
     <div class="col-12 mt-3">
@@ -101,8 +109,21 @@ foreach ($herci as $herec) {
         <?= $this->Form->end() ?>
     </div>
 </div>
-<div class="row mt-3">
+<div class="row bg-select">
     <div class="col-12">
-        <div class="h3 bg-success mt-3 text-center rounded"><?= $this->Flash->render() ?></div>
+        <div class="h4 mt-3">Země podílející se na tvorbě filmu</div>
+        <?php foreach ($filmyzeme as $zeme) {
+            echo "<div class='row'>";
+
+            echo $this->Form->text((string)$zeme->id_propojeni, ['default' => $zeme->zeme->nazev, 'class' => 'form form-control mb-1 col-11', 'disabled' => 'true'])
+                . "<div class='col-1'>" . $this->Html->link('Odstranit', ['Controller' => 'Filmy', 'action' => 'removeZeme', $zeme->id_propojeni], ['class' => 'btn btn-danger mb-1 font-weight-bold']) . "</div>";
+            echo "</div>";
+        } ?>
+    </div>
+    <div class="col-12 mt-3">
+        <?= $this->Form->create($jazyky, ['url' => ['action' => 'addZeme', $film->id_film]]); ?>
+        <?= $this->Form->select('nova_zeme', $zemeOptions, ['class' => 'form form-control mb-1']); ?>
+        <?= $this->Form->button('Přidat zemi', ['type' => 'submit', 'class' => 'btn btn-primary mt-3 float-right']); ?>
+        <?= $this->Form->end() ?>
     </div>
 </div>

@@ -3,22 +3,21 @@ namespace App\Model\Table;
 
 use Cake\ORM\Table;
 
-class FilmyHerciTable extends Table
+class FilmyZemeTable extends Table
 {
     public function initialize(array $config): void
     {
         $this
-        ->setTable('filmy_herci')
+        ->setTable('filmy_zeme')
         ->setPrimaryKey('id_propojeni');
 
         $this->belongsTo('filmy')
         ->setBindingKey('id_film')
         ->setForeignKey('id_film');
         
-        $this->belongsTo('herci')
-        ->setBindingKey('id_herec')
-        ->setForeignKey('id_herec');
+        $this->belongsTo('zeme')
+        ->setBindingKey('id_zeme')
+        ->setForeignKey('id_zeme');
 
     }
 }
-

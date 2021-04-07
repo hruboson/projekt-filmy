@@ -87,9 +87,7 @@ class UsersController extends AppController
     public function edit($id)
     {
         if ($id == $this->Authentication->getResult()->getData()['id']) { // Only authenticated user with logged id can access
-            $user = $this->Users->get($id, [
-                'contain' => ['filmynazvy', 'filmyzanry', 'filmytypy'],
-            ]);
+            $user = $this->Users->get($id);
             if ($this->request->is(['patch', 'post', 'put'])) {
                 $user = $this->Users->patchEntity($user, $this->request->getData());
                 if ($this->Users->save($user)) {
@@ -99,7 +97,7 @@ class UsersController extends AppController
                 }
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
-            $this->set(compact('film'));
+            $this->set(compact('user'));
         } else {
             return $this->redirect(['controller' => 'Main', 'action' => 'index']);
         }

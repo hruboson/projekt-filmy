@@ -11,6 +11,7 @@ $routes->scope('/filmy', function (RouteBuilder $routes){
 
    $routes->connect('/', ['controller' => 'Filmy', 'action' => 'index']);
    $routes->connect('/{id}', ['controller' => 'Filmy', 'action' => 'film'], ['pass' => ['id']]);
+   $routes->connect('/add', ['controller' => 'Filmy', 'action' => 'add']);
    $routes->connect('/edit/{id}', ['controller' => 'Filmy', 'action' => 'edit'], ['pass' => ['id']]);
    $routes->connect('/delete/{id}', ['controller' => 'Filmy', 'action' => 'delete'], ['pass' => ['id']]);
 
@@ -24,12 +25,25 @@ $routes->scope('/filmy', function (RouteBuilder $routes){
    $routes->connect('/add_herec/{id}', ['controller' => 'Filmy', 'action' => 'addHerec'], ['pass' => ['id']]);
    $routes->connect('/remove_herec/{id}', ['controller' => 'Filmy', 'action' => 'removeHerec'], ['pass' => ['id']]);
    
+   // zeme
+   $routes->connect('/add_zeme/{id}', ['controller' => 'Filmy', 'action' => 'addZeme'], ['pass' => ['id']]);
+   $routes->connect('/remove_zeme/{id}', ['controller' => 'Filmy', 'action' => 'removeZeme'], ['pass' => ['id']]);
+
 });
 
 $routes->scope('/promitani', function (RouteBuilder $routes){
 
    $routes->connect('/', ['controller' => 'Promitani', 'action' => 'index']);
    $routes->connect('/{id}', ['controller' => 'Promitani', 'action' => 'promitani'], ['pass' => ['id']]);
+
+});
+
+$routes->scope('/herci', function (RouteBuilder $routes){
+
+   $routes->connect('/', ['controller' => 'Herci', 'action' => 'index']);
+   $routes->connect('/edit/{id}', ['controller' => 'Herci', 'action' => 'edit'], ['pass' => ['id']]);
+   $routes->connect('/delete/{id}', ['controller' => 'Herci', 'action' => 'delete'], ['pass' => ['id']]);
+   $routes->connect('/add', ['controller' => 'Herci', 'action' => 'add']);
 
 });
 
