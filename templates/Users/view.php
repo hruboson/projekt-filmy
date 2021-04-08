@@ -5,6 +5,11 @@
  */
 ?>
 <div class="row">
+    <div class="col-12 text-center h1">
+        <?php echo $user->username; ?>
+    </div>
+</div>
+<div class="row">
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>

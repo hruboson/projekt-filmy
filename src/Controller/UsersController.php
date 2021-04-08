@@ -87,6 +87,12 @@ class UsersController extends AppController
     public function edit($id)
     {
         if ($id == $this->Authentication->getResult()->getData()['id']) { // Only authenticated user with logged id can access
+            $vstupenkyTable = $this->getTableLocator()->get('Vstupenky');
+            $vstupenky = $vstupenkyTable->find('all')
+                ->contain('promitani.saly')
+                ->contain('promitani.filmy.filmynazvy')
+                ->where(['id_user' => $id])
+                ->where(['filmynazvy.id_jazyk' => 1]); // tyto čísla by se měnili podle jazyka stránky
             $user = $this->Users->get($id);
             if ($this->request->is(['patch', 'post', 'put'])) {
                 $user = $this->Users->patchEntity($user, $this->request->getData());
@@ -98,6 +104,7 @@ class UsersController extends AppController
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
             $this->set(compact('user'));
+            $this->set(compact('vstupenky'));
         } else {
             return $this->redirect(['controller' => 'Main', 'action' => 'index']);
         }

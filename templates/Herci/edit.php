@@ -13,11 +13,10 @@
         <div class="side-nav">
             <h4 class="heading"><?= __('Možnosti') ?></h4>
             <?php echo $this->Form->postLink(
-                __('Odstranit film'),
+                __('Odstranit herce'),
                 ['controller' => 'Herci', 'action' => 'delete', $herec->id_herec],
                 ['confirm' => __('Jste si jisti že chcete vymazat herce {0}?', $herec->jmeno." ".$herec->prijmeni), 'class' => 'side-nav-item']
             ) ?><br>
-            <?php $this->Html->link(__('List movies'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </div>
     </div>
 </div> 

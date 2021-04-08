@@ -47,6 +47,12 @@ $title = 'Filmy'
         <?= $this->Html->link('Filmy', ['controller' => 'Filmy', 'action' => 'index', '_full' => true]) ?>
         <?= $this->Html->link('Herci', ['controller' => 'Herci', 'action' => 'index', '_full' => true]) ?>
         <?= $this->Html->link('Promítání', ['controller' => 'Promitani', 'action' => 'index', '_full' => true]) ?>
+        <?php 
+        if ($logged) {
+            if ($role == "admin") { 
+                echo $this->Html->link('Sály', ['controller' => 'Saly', 'action' => 'index', '_full' => true]);
+            }
+        } ?>
         <?php if (!$logged) { ?>
         <?= $this->Html->link('Přihlásit se', ['controller' => 'Users', 'action' => 'login'], ['class' => 'font-weight-light']) ?>
         <?= $this->Html->link('Registrace', ['controller' => 'Users', 'action' => 'add'], ['class' => 'font-weight-light']) ?>

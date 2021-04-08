@@ -35,6 +35,10 @@ $routes->scope('/promitani', function (RouteBuilder $routes){
 
    $routes->connect('/', ['controller' => 'Promitani', 'action' => 'index']);
    $routes->connect('/{id}', ['controller' => 'Promitani', 'action' => 'promitani'], ['pass' => ['id']]);
+   $routes->connect('/add', ['controller' => 'Promitani', 'action' => 'add']);
+   $routes->connect('/edit/{id}', ['controller' => 'Promitani', 'action' => 'edit'], ['pass' => ['id']]);
+   $routes->connect('/delete/{id}', ['controller' => 'Promitani', 'action' => 'delete'], ['pass' => ['id']]);
+   $routes->connect('/buy/{id}', ['controller' => 'Promitani', 'action' => 'buy'], ['pass' => ['id']]);
 
 });
 
@@ -44,6 +48,15 @@ $routes->scope('/herci', function (RouteBuilder $routes){
    $routes->connect('/edit/{id}', ['controller' => 'Herci', 'action' => 'edit'], ['pass' => ['id']]);
    $routes->connect('/delete/{id}', ['controller' => 'Herci', 'action' => 'delete'], ['pass' => ['id']]);
    $routes->connect('/add', ['controller' => 'Herci', 'action' => 'add']);
+
+});
+
+$routes->scope('/saly', function (RouteBuilder $routes){
+
+   $routes->connect('/', ['controller' => 'Saly', 'action' => 'index']);
+   $routes->connect('/add', ['controller' => 'Saly', 'action' => 'add']);
+   $routes->connect('/edit/{id}', ['controller' => 'Saly', 'action' => 'edit'], ['pass' => ['id']]);
+   $routes->connect('/delete/{id}', ['controller' => 'Saly', 'action' => 'delete'], ['pass' => ['id']]);
 
 });
 
