@@ -26,16 +26,16 @@
                 <th>Film</th>
                 <th>Cena</th>
             </tr>
-            <tr>
-                <?php foreach($vstupenky as $vstupenka){ ?>
+            <?php foreach ($vstupenky as $vstupenka) { ?>
+                <tr>
                     <td><?= $vstupenka->id_vstupenka; ?></td>
                     <td><?= date_format($vstupenka->datum_cas_prodani, 'd. m. Y H:i:s'); ?></td>
                     <td><?= $vstupenka->promitani->saly->nazev; ?></td>
-                    <td><?= date_format($vstupenka->promitani->datum, 'd. m. Y')." ".date_format($vstupenka->promitani->cas,'H:i:s'); ?></td>
+                    <td><?= date_format($vstupenka->promitani->datum, 'd. m. Y') . " " . date_format($vstupenka->promitani->cas, 'H:i:s'); ?></td>
                     <td><?= $vstupenka->promitani->filmy->filmynazvy->nazev; ?></td>
-                    <td><?= $vstupenka->cena."Kč"; ?></td>
-                <?php } ?>
-            </tr>
+                    <td><?= $vstupenka->cena . "Kč"; ?></td>
+                </tr>
+            <?php } ?>
         </table>
     </div>
 </div>

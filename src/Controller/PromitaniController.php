@@ -117,11 +117,11 @@ class PromitaniController extends AppController
             $vstupenka->id_user = $this->Authentication->getResult()->getData()['id'];
             $vstupenka->id_promitani = $id;
             if ($this->Vstupenky->save($vstupenka)) {
-                $this->Flash->success(__('Podrobnosti o promítání byly uloženy'));
+                $this->Flash->success(__('Vstupenka byla zakoupena'));
 
-                return $this->redirect(['controller' => 'Users', 'action' => 'edit', $id]);
+                return $this->redirect(['controller' => 'Users', 'action' => 'edit', $this->Authentication->getResult()->getData()['id']]);
             }
-            $this->Flash->error(__('Nepodařilo se uložit podrobnosti o promítání. Prosím zkuste to znovu.'));
+            $this->Flash->error(__('Nepodařilo se zakoupit vstupenku. Prosím zkuste to znovu.'));
         }
 
         $this->set(compact('promitani'));
