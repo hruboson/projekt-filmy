@@ -17,7 +17,7 @@ class SalyController extends AppController
 
     public function index()
     {
-        $salyTable = $this->getTableLocator()->get('Saly');
+        $salyTable = $this->getTableLocator()->get('saly');
         $saly = $salyTable->find('all');
 
         $this->set(compact('saly'));
@@ -43,7 +43,7 @@ class SalyController extends AppController
     public function edit($id)
     {
         if ($this->Authentication->getResult()->getData()['role'] == "admin") { // Only authenticated user with admin role can access
-            $salyTable = $this->getTableLocator()->get('Saly');
+            $salyTable = $this->getTableLocator()->get('saly');
             $sal = $salyTable->get($id);
             $this->loadModel('Saly');
             if ($this->request->is(['patch', 'post', 'put'])) {

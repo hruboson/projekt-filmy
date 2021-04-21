@@ -19,7 +19,7 @@ class PromitaniController extends AppController
 
     public function index()
     {
-        $promitaniTable = $this->getTableLocator()->get('Promitani');
+        $promitaniTable = $this->getTableLocator()->get('promitani');
         $promitani = $promitaniTable->find('all')
             ->contain('filmy')
             ->contain('filmy.filmynazvy')
@@ -33,8 +33,8 @@ class PromitaniController extends AppController
     {
         if ($this->Authentication->getResult()->getData()['role'] == "admin") { // Only authenticated user with admin role can access
             $promitaniTable = $this->getTableLocator()->get('Promitani');
-            $filmyTable = $this->getTableLocator()->get('Filmy');
-            $salyTable = $this->getTableLocator()->get('Saly');
+            $filmyTable = $this->getTableLocator()->get('filmy');
+            $salyTable = $this->getTableLocator()->get('saly');
 
             $filmy = $filmyTable->find('all')
                 ->contain('filmynazvy');
@@ -61,8 +61,8 @@ class PromitaniController extends AppController
     {
         if ($this->Authentication->getResult()->getData()['role'] == "admin") { // Only authenticated user with admin role can access
             $promitaniTable = $this->getTableLocator()->get('Promitani');
-            $filmyTable = $this->getTableLocator()->get('Filmy');
-            $salyTable = $this->getTableLocator()->get('Saly');
+            $filmyTable = $this->getTableLocator()->get('filmy');
+            $salyTable = $this->getTableLocator()->get('saly');
 
             $filmy = $filmyTable->find('all')
                 ->contain('filmynazvy');
