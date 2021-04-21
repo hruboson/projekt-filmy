@@ -10,7 +10,7 @@ class FilmyZanryTable extends Table
         $this
         ->setTable('filmyzanry')
         ->setPrimaryKey('id_zanr')
-        ->belongsTo('filmy')
+        ->belongsTo('Filmy')
         ->setForeignKey('id_film')
         ->setJoinType(\Cake\Database\Query::JOIN_TYPE_INNER);
     }

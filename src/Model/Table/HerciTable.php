@@ -11,14 +11,14 @@ class HerciTable extends Table
         ->setTable('herci');
         
         $this
-        ->belongsTo('filmyherci')
+        ->belongsTo('FilmyHerci')
         ->setForeignKey('id_herec')
         ->setBindingKey('id_herec')
         ->setJoinType(\Cake\Database\Query::JOIN_TYPE_INNER);
 
         $this
-        ->belongsToMany('filmy', [
-        'through' => 'filmyherci',
+        ->belongsToMany('Filmy', [
+        'through' => 'FilmyHerci',
         'foreignKey' => 'id_herec',
         'targetForeignKey' => 'id_film',
         ]);

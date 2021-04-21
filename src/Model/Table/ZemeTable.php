@@ -11,14 +11,14 @@ class ZemeTable extends Table
         ->setTable('zeme');
         
         $this
-        ->belongsTo('filmyzeme')
+        ->belongsTo('FilmyZeme')
         ->setForeignKey('id_zeme')
         ->setBindingKey('id_zeme')
         ->setJoinType(\Cake\Database\Query::JOIN_TYPE_INNER);
 
         $this
-        ->belongsToMany('filmy', [
-        'through' => 'filmyzeme',
+        ->belongsToMany('Filmy', [
+        'through' => 'FilmyZeme',
         'foreignKey' => 'id_zeme',
         'targetForeignKey' => 'id_film',
         ]);

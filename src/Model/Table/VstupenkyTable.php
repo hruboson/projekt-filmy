@@ -11,7 +11,7 @@ class VstupenkyTable extends Table
         ->setTable('vstupenky');
 
         $this
-        ->hasOne('promitani')
+        ->hasOne('Promitani')
         ->setForeignKey('id_promitani')
         ->setBindingKey('id_promitani')
         ->setJoinType(\Cake\Database\Query::JOIN_TYPE_INNER);

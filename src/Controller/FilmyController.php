@@ -28,7 +28,7 @@ class FilmyController extends AppController
         $filmytable = $this->getTableLocator()->get('Filmy');
 
         $filmy =  $filmytable->find('all')
-            ->distinct(['filmy.id_film']) // needed for multiple same language titles
+            ->distinct(['Filmy.id_film']) // needed for multiple same language titles
             // here should be min filmynazvy.id_propojeni
             ->contain('FilmyTypy')
             ->contain('FilmyZanry')
