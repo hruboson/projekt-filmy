@@ -20,12 +20,12 @@ class FilmyController extends AppController
 
     public function index()
     {
-        $this->loadModel('Filmy');
-        $this->loadModel('Filmynazvy');
-        $this->loadModel('Jazyky');
+        $this->loadModel('filmy');
+        $this->loadModel('filmynazvy');
+        $this->loadModel('jazyky');
         $this->loadComponent('Paginator');
 
-        $filmytable = $this->getTableLocator()->get('Filmy');
+        $filmytable = $this->getTableLocator()->get('filmy');
 
         $filmy =  $filmytable->find('all')
             ->distinct(['filmy.id_film']) // needed for multiple same language titles
