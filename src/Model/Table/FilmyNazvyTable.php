@@ -8,7 +8,7 @@ class FilmyNazvyTable extends Table
     public function initialize(array $config): void
     {
         $this
-        ->setTable('filmy_nazvy');
+        ->setTable('filmynazvy');
 
         $this->belongsTo('filmy')
         ->setBindingKey('id_film')

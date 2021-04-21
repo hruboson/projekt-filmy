@@ -8,7 +8,7 @@ class FilmyZanryTable extends Table
     public function initialize(array $config): void
     {
         $this
-        ->setTable('filmy_zanry')
+        ->setTable('filmyzanry')
         ->setPrimaryKey('id_zanr')
         ->belongsTo('filmy')
         ->setForeignKey('id_film')

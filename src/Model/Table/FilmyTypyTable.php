@@ -8,7 +8,7 @@ class FilmyTypyTable extends Table
     public function initialize(array $config): void
     {
         $this
-        ->setTable('filmy_typy')
+        ->setTable('filmytypy')
         ->setPrimaryKey('id_typ');
     }
 }
