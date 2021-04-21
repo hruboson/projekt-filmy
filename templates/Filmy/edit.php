@@ -28,7 +28,7 @@ foreach ($zeme as $zemeLocal) {
 ?>
 <div class="row">
     <div class="col-12 text-center h1">
-        <?php echo $this->Html->link($film->filmynazvy->nazev, ['action' => 'film', $film->id_film]);
+        <?php echo $this->Html->link($film->FilmyNazvy->nazev, ['action' => 'film', $film->id_film]);
         ?>
     </div>
 </div>
@@ -39,7 +39,7 @@ foreach ($zeme as $zemeLocal) {
             <?php echo $this->Form->postLink(
                 __('Odstranit film'),
                 ['controller' => 'Filmy', 'action' => 'delete', $film->id_film],
-                ['confirm' => __('Jste si jisti že chcete vymazat film {0}?', $film->filmynazvy->nazev), 'class' => 'side-nav-item']
+                ['confirm' => __('Jste si jisti že chcete vymazat film {0}?', $film->FilmyNazvy->nazev), 'class' => 'side-nav-item']
             ) ?><br>
             <?php $this->Html->link(__('List movies'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </div>
@@ -77,7 +77,7 @@ foreach ($zeme as $zemeLocal) {
             echo $nazev->jazyky->jazyk;
             echo "<div class='row'>";
 
-            echo $this->Form->text((string)$nazev->jazyky->id_jazyk, ['default' => $nazev->nazev, 'class' => 'form form-control mb-1 col-11'])
+            echo $this->Form->text((string)$nazev->Jazyky->id_jazyk, ['default' => $nazev->nazev, 'class' => 'form form-control mb-1 col-11'])
                 . "<div class='col-1'>" . $this->Html->link('Odstranit', ['Controller' => 'Filmy', 'action' => 'removeJazyk', $nazev->id_propojeni], ['class' => 'btn btn-danger mb-1 font-weight-bold']) . "</div>";
             echo "</div>";
         } ?>
@@ -97,7 +97,7 @@ foreach ($zeme as $zemeLocal) {
         <?php foreach ($filmyherci as $herec) {
             echo "<div class='row'>";
 
-            echo $this->Form->text((string)$herec->id_propojeni, ['default' => $herec->herci->jmeno . " " . $herec->herci->prijmeni, 'class' => 'form form-control mb-1 col-11', 'disabled' => 'true'])
+            echo $this->Form->text((string)$herec->id_propojeni, ['default' => $herec->Herci->jmeno . " " . $herec->Herci->prijmeni, 'class' => 'form form-control mb-1 col-11', 'disabled' => 'true'])
                 . "<div class='col-1'>" . $this->Html->link('Odstranit', ['Controller' => 'Filmy', 'action' => 'removeHerec', $herec->id_propojeni], ['class' => 'btn btn-danger mb-1 font-weight-bold']) . "</div>";
             echo "</div>";
         } ?>
@@ -115,7 +115,7 @@ foreach ($zeme as $zemeLocal) {
         <?php foreach ($filmyzeme as $zeme) {
             echo "<div class='row'>";
 
-            echo $this->Form->text((string)$zeme->id_propojeni, ['default' => $zeme->zeme->nazev, 'class' => 'form form-control mb-1 col-11', 'disabled' => 'true'])
+            echo $this->Form->text((string)$zeme->id_propojeni, ['default' => $zeme->Zeme->nazev, 'class' => 'form form-control mb-1 col-11', 'disabled' => 'true'])
                 . "<div class='col-1'>" . $this->Html->link('Odstranit', ['Controller' => 'Filmy', 'action' => 'removeZeme', $zeme->id_propojeni], ['class' => 'btn btn-danger mb-1 font-weight-bold']) . "</div>";
             echo "</div>";
         } ?>

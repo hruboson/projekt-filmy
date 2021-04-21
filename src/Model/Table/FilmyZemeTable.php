@@ -11,11 +11,11 @@ class FilmyZemeTable extends Table
         ->setTable('filmyzeme')
         ->setPrimaryKey('id_propojeni');
 
-        $this->belongsTo('filmy')
+        $this->belongsTo('Filmy')
         ->setBindingKey('id_film')
         ->setForeignKey('id_film');
         
-        $this->belongsTo('zeme')
+        $this->belongsTo('Zeme')
         ->setBindingKey('id_zeme')
         ->setForeignKey('id_zeme');
 

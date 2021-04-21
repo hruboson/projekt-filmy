@@ -30,7 +30,7 @@
             foreach ($filmy as $film) : ?>
                 <tr>
                     <td>
-                        <?= $this->Html->link($film->filmynazvy->nazev, ['Controller' => 'Filmy', 'action' => 'film', $film->id_film]) ?>
+                        <?= $this->Html->link($film->FilmyNazvy->nazev, ['Controller' => 'Filmy', 'action' => 'film', $film->id_film]) ?>
                     </td>
                     <td>
                         <?= $film->delka ?> minut
@@ -39,10 +39,10 @@
                         <?= $film->jmeno_hlavni_postavy ?>
                     </td>
                     <td>
-                        <?= $film->filmyzanry->zanr_nazev ?>
+                        <?= $film->FilmyZanry->zanr_nazev ?>
                     </td>
                     <td>
-                        <?= $film->filmytypy->nazev ?>
+                        <?= $film->FilmyTypy->nazev ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

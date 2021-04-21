@@ -41,11 +41,11 @@ class FilmyController extends AppController
     public function film($id)
     {
         $filmytable = $this->getTableLocator()->get('Filmy');
-        $filmynazvyTable = $this->getTableLocator()->get('Filmynazvy');
+        $filmynazvyTable = $this->getTableLocator()->get('FilmyNazvy');
 
-        $film =  $filmytable->get($id, ['contain' => ['filmytypy', 'filmyzanry', 'filmynazvy.jazyky', 'filmyherci.herci', 'filmyzeme.zeme']]);
+        $film =  $filmytable->get($id, ['contain' => ['FilmyTypy', 'FilmyZanry', 'FilmyNazvy.Jazyky', 'FilmyHerci.Herci', 'FilmyZeme.Zeme']]);
         $filmynazvy = $filmynazvyTable->find()
-            ->contain('jazyky')
+            ->contain('Jazyky')
             ->where(['id_film' => $id]);
         /*$film = $filmytable->find()
             ->contain('filmyzanry')
@@ -67,7 +67,7 @@ class FilmyController extends AppController
             $zanryTable = $this->getTableLocator()->get('Zanry');
             $filmytable = $this->getTableLocator()->get('Filmy');
             $zemetable = $this->getTableLocator()->get('Zeme');
-            $filmynazvyTable = $this->getTableLocator()->get('Filmynazvy');
+            $filmynazvyTable = $this->getTableLocator()->get('FilmyNazvy');
 
             $typy = $typyTable->find()->select(['id_typ', 'nazev']);
             $zanry = $zanryTable->find()->select(['id_zanr', 'zanr_nazev']);
@@ -107,7 +107,7 @@ class FilmyController extends AppController
 
 
 
-            $film =  $filmytable->get($id, ['contain' => ['filmytypy', 'filmyzanry', 'filmynazvy.jazyky']]);
+            $film =  $filmytable->get($id, ['contain' => ['FilmyTypy', 'FilmyZanry', 'FilmyNazvy.Jazyky']]);
             /*->contain('filmytypy')
             ->contain('filmyzanry')
             ->contain(['filmynazvy' => ['jazyky']])
@@ -118,9 +118,9 @@ class FilmyController extends AppController
             $herciTable = $this->getTableLocator()->get('Herci');
             $typyTable = $this->getTableLocator()->get('Typy');
             $zanryTable = $this->getTableLocator()->get('Zanry');
-            $filmyherciTable = $this->getTableLocator()->get('Filmyherci');
-            $filmynazvyTable = $this->getTableLocator()->get('Filmynazvy');
-            $filmyzemeTable = $this->getTableLocator()->get('Filmyzeme');
+            $filmyherciTable = $this->getTableLocator()->get('FilmyHerci');
+            $filmynazvyTable = $this->getTableLocator()->get('FilmyNazvy');
+            $filmyzemeTable = $this->getTableLocator()->get('FilmyZeme');
 
             $jazyky = $jazykytable->find('all');
             $zeme = $zemeTable->find('all');
@@ -128,13 +128,13 @@ class FilmyController extends AppController
             $typy = $typyTable->find()->select(['id_typ', 'nazev']);
             $zanry = $zanryTable->find()->select(['id_zanr', 'zanr_nazev']);
             $filmyherci = $filmyherciTable->find()
-            ->contain('herci')
-            ->where(['filmyherci.id_film' => $id]);
+            ->contain('Herci')
+            ->where(['FilmyHerci.id_film' => $id]);
             $filmynazvy = $filmynazvyTable->find()
                 ->contain('jazyky')
                 ->where(['id_film' => $id]);
             $filmyzeme = $filmyzemeTable->find()
-                ->contain('zeme')
+                ->contain('Zeme')
                 ->where(['id_film' => $id]);
 
 
@@ -167,11 +167,11 @@ class FilmyController extends AppController
     {
         if ($this->Authentication->getResult()->getData()['role'] == "admin") { // Only authenticated user with admin role can access
 
-            $this->loadModel('Filmynazvy');
+            $this->loadModel('FilmyNazvy');
 
-            $filmynazvyTable = $this->getTableLocator()->get('Filmynazvy');
+            $filmynazvyTable = $this->getTableLocator()->get('FilmyNazvy');
             $nazvy = $filmynazvyTable->find() // one init dataset
-                ->contain('jazyky')
+                ->contain('Jazyky')
                 ->where(['id_film' => $id]);
 
             if ($this->request->is(['patch', 'post', 'put'])) {
@@ -194,9 +194,9 @@ class FilmyController extends AppController
     public function addJazyk($id)
     {
         if ($this->Authentication->getResult()->getData()['role'] == "admin") { // Only authenticated user with admin role can access
-            $this->loadModel('Filmynazvy');
+            $this->loadModel('FilmyNazvy');
 
-            $filmynazvyTable = $this->getTableLocator()->get('Filmynazvy');
+            $filmynazvyTable = $this->getTableLocator()->get('FilmyNazvy');
 
             if ($this->request->is(['patch', 'post', 'put'])) {
                 $nazev = $filmynazvyTable->newEmptyEntity();
@@ -216,9 +216,9 @@ class FilmyController extends AppController
     public function removeJazyk($id)
     {
         if ($this->Authentication->getResult()->getData()['role'] == "admin") { // Only authenticated user with admin role can access
-            $this->loadModel('Filmynazvy');
+            $this->loadModel('FilmyNazvy');
 
-            $filmynazvyTable = $this->getTableLocator()->get('Filmynazvy');
+            $filmynazvyTable = $this->getTableLocator()->get('FilmyNazvy');
 
             $entity = $filmynazvyTable->get($id);
             $id_film = $entity->id_film;
@@ -231,9 +231,9 @@ class FilmyController extends AppController
     public function addHerec($id)
     {
         if ($this->Authentication->getResult()->getData()['role'] == "admin") { // Only authenticated user with admin role can access
-            $this->loadModel('Filmyherci');
+            $this->loadModel('FilmyHerci');
 
-            $filmyherciTable = $this->getTableLocator()->get('Filmyherci');
+            $filmyherciTable = $this->getTableLocator()->get('FilmyHerci');
 
             if ($this->request->is(['patch', 'post', 'put'])) {
                 $herec = $filmyherciTable->newEmptyEntity();
@@ -252,9 +252,9 @@ class FilmyController extends AppController
     public function removeHerec($id)
     {
         if ($this->Authentication->getResult()->getData()['role'] == "admin") { // Only authenticated user with admin role can access
-            $this->loadModel('Filmyherci');
+            $this->loadModel('FilmyHerci');
 
-            $filmyherciTable = $this->getTableLocator()->get('Filmyherci');
+            $filmyherciTable = $this->getTableLocator()->get('FilmyHerci');
 
             $entity = $filmyherciTable->get($id);
             $id_film = $entity->id_film;
@@ -267,9 +267,9 @@ class FilmyController extends AppController
     public function addZeme($id)
     {
         if ($this->Authentication->getResult()->getData()['role'] == "admin") { // Only authenticated user with admin role can access
-            $this->loadModel('Filmyzeme');
+            $this->loadModel('FilmyZeme');
 
-            $filmyzemeTable = $this->getTableLocator()->get('Filmyzeme');
+            $filmyzemeTable = $this->getTableLocator()->get('FilmyZeme');
 
             if ($this->request->is(['patch', 'post', 'put'])) {
                 $zeme = $filmyzemeTable->newEmptyEntity();
@@ -288,9 +288,9 @@ class FilmyController extends AppController
     public function removeZeme($id)
     {
         if ($this->Authentication->getResult()->getData()['role'] == "admin") { // Only authenticated user with admin role can access
-            $this->loadModel('Filmyzeme');
+            $this->loadModel('FilmyZeme');
 
-            $filmyzemeTable = $this->getTableLocator()->get('Filmyzeme');
+            $filmyzemeTable = $this->getTableLocator()->get('FilmyZeme');
 
             $entity = $filmyzemeTable->get($id);
             $id_film = $entity->id_film;

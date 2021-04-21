@@ -1,4 +1,4 @@
-<div class="h1 text-center mt-5"><?php echo $film->filmynazvy->nazev; ?></div>
+<div class="h1 text-center mt-5"><?php echo $film->FilmyNazvy->nazev; ?></div>
 <div class="row">
     <div class="col-12 text-center">
         <?php
@@ -22,19 +22,19 @@
     </div>
     <div class="col-3 text-center">
         <div class="h5">Typ filmu</div>
-        <div class="p"><?php echo $film->filmytypy->nazev ?></div>
+        <div class="p"><?php echo $film->FilmyTypy->nazev ?></div>
     </div>
     <div class="col-3 text-center">
         <div class="h5">Žánr filmu</div>
-        <div class="p"><?php echo $film->filmyzanry->zanr_nazev ?></div>
+        <div class="p"><?php echo $film->FilmyZanry->zanr_nazev ?></div>
     </div>
 </div>
 <div class="row">
     <div class="col-6">
         <div class="h4 text-center">Herci ve filmu</div>
         <ul class="list-group list-group-flush text-center">
-            <?php foreach ($film->filmyherci as $herec) { ?>
-                <li class="list-group-item"><?= $herec->herci->jmeno . " " . $herec->herci->prijmeni; ?></li>
+            <?php foreach ($film->FilmyHerci as $herec) { ?>
+                <li class="list-group-item"><?= $herec->Herci->jmeno . " " . $herec->Herci->prijmeni; ?></li>
             <?php } ?>
         </ul>
     </div>
@@ -46,7 +46,7 @@
                     <div class="ms-2 me-auto">
                         <div class="fw-bold"><?php echo $nazev->nazev; ?></div>
                     </div>
-                    <span class="badge bg-primary rounded-pill"><?php echo $nazev->jazyky->jazyk; ?></span>
+                    <span class="badge bg-primary rounded-pill"><?php echo $nazev->Jazyky->jazyk; ?></span>
                 </li>
             <?php } ?>
         </ol>
@@ -57,7 +57,7 @@
         <div class="h4 text-center">Země podílející se na tvorbě filmu</div>
         <ul class="list-group list-group-flush">
             <?php foreach ($film->filmyzeme as $zeme) { ?>
-                <li class="list-group-item"><?= $zeme->zeme->nazev; ?></li>
+                <li class="list-group-item"><?= $zeme->Zeme->nazev; ?></li>
             <?php } ?>
         </ul>
     </div>
