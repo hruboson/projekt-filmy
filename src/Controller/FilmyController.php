@@ -30,10 +30,10 @@ class FilmyController extends AppController
         $filmy =  $filmytable->find('all')
             ->distinct(['filmy.id_film']) // needed for multiple same language titles
             // here should be min filmynazvy.id_propojeni
-            ->contain('filmytypy')
-            ->contain('filmyzanry')
-            ->contain(['filmynazvy' => ['jazyky']])
-            ->where(['jazyky.jazyk' => 'čeština']);
+            ->contain('FilmyTypy')
+            ->contain('FilmyZanry')
+            ->contain(['FilmyNazvy' => ['Jazyky']])
+            ->where(['Jazyky.jazyk' => 'čeština']);
 
         $this->set('filmy', $filmy);
     }
