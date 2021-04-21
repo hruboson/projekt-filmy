@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -14,6 +15,7 @@ declare(strict_types=1);
  * @since     3.3.0
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App;
 
 use Authentication\AuthenticationServiceInterface;
@@ -68,11 +70,11 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         /*
          * Only try to load DebugKit in development mode
          * Debug Kit should not be installed on a production system
-         */
+         
         if (Configure::read('debug')) {
             $this->addPlugin('DebugKit');
         }
-
+        */
         // Load more plugins here
     }
 
@@ -85,7 +87,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
         $middlewareQueue
-        
+
             // Catch any exceptions in the lower layers,
             // and make an error page/response
             ->add(new ErrorHandlerMiddleware(Configure::read('Error')))
@@ -115,9 +117,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             // https://book.cakephp.org/4/en/controllers/middleware.html#cross-site-request-forgery-csrf-middleware
             ->add(new CsrfProtectionMiddleware([
                 'httponly' => true,
-            ]))
-        
-            ;
+            ]));
 
 
         return $middlewareQueue;
@@ -130,7 +130,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             'unauthenticatedRedirect' => Router::url(['controller' => 'Users', 'action' => 'login']),
             'queryParam' => 'redirect',
         ]);
-    
+
         // Load identifiers, ensure we check email and password fields
         $authenticationService->loadIdentifier('Authentication.Password', [
             'fields' => [
@@ -138,7 +138,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                 'password' => 'password',
             ]
         ]);
-    
+
         // Load the authenticators, you want session first
         $authenticationService->loadAuthenticator('Authentication.Session');
         // Configure form data check to pick email and password
@@ -149,7 +149,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             ],
             'loginUrl' => Router::url(['controller' => 'Users', 'action' => 'login']),
         ]);
-    
+
         return $authenticationService;
     }
     /**
