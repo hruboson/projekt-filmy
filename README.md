@@ -1,3 +1,9 @@
+# CakePHP application for highschool class
+
+This webapp is a database for movies, using MySQL. It is a free software, feel free to do whatever you want with it.
+
+I used to host this on Heroku until they started charging like madmans.
+
 # CakePHP Application Skeleton
 
 [![Build Status](https://img.shields.io/github/workflow/status/cakephp/app/CakePHP%20App%20CI/master?style=flat-square)](https://github.com/cakephp/app/actions)
